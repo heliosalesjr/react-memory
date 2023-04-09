@@ -1,0 +1,4 @@
+playlist: https://youtube.com/playlist?list=PL4cUxeGkcC9iQ7g2eoNXHCJBBBz40S_Lm
+
+github: https://github.com/iamshaunjp/React-Firebase/tree/lesson-58
+

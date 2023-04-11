@@ -10,3 +10,7 @@ body {
   background: #1b1523;
   color: #fff;
 }
+
+.cards {
+  max-width: 100px;
+}

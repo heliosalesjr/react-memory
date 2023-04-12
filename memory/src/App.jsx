@@ -29,7 +29,9 @@ function App() {
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
 
-  // We will create a function that does three things: duplicate each card, shuffle the cards with the sort method and generate an id for each card 
+  const [disabled, setDisabled] = useState(false);
+
+  // this function does three main things: duplicate each card, shuffle the cards with the sort method and generate an id for each card 
 
   const shuffleCards = () => {
     // duplicate each card
@@ -39,6 +41,8 @@ function App() {
       // generate an id for each card
       .map((card) => ( {...card, id: Math.random() } ))
 
+    setChoiceOne(null);
+    setChoiceTwo(null);
     setCards(shuffleCards);
 
     setTurns(0)
@@ -52,7 +56,9 @@ function App() {
 
   //compare the two selected cards
   React.useEffect(() => {
+    
     if (choiceOne && choiceTwo) {
+      setDisabled(true)
       if (choiceOne.src === choiceTwo.src) {
         setCards(prevCards => {
           return prevCards.map((card) => {
@@ -68,7 +74,7 @@ function App() {
         resetTurn()
       } else {
         console.log('Sashay, hunty!')
-        resetTurn()
+        setTimeout(() => resetTurn(), 1000)
       }
       
     }
@@ -79,12 +85,18 @@ function App() {
     setChoiceOne(null);
     setChoiceTwo(null);
     setTurns(prevTurns => prevTurns + 1)
+    setDisabled(false)
   }
+
+//starts a new game as the page loads
+  useEffect(() => {
+    shuffleCards()
+  }, [])
 
   return (
     <div className="App">
-      <h1>Drag Memory</h1>
-      <button onClick={ shuffleCards }>meclickan</button>
+      <h1>Drag Match</h1>
+      <button onClick={ shuffleCards }>Shantay, let's play! </button>
       
       <div className="card-grid">
         {cards.map(card => (
@@ -93,12 +105,13 @@ function App() {
             card={ card }
             handleChoice={handleChoice} // passing the function as a prop
             flipped={ card === choiceOne || card === choiceTwo || card.matched }
+            disabled={disabled}
           />
 
         ))}
 
       </div>
-          
+      <h2>Turns: {turns}</h2>
     </div>
   )
 }
